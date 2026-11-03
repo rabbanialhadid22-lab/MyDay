@@ -1,0 +1,275 @@
+:root {
+  --bg: #faf8f1;
+  --card: #fffefb;
+  --line: #e9e5d8;
+  --text: #22302a;
+  --muted: #6f7c73;
+  --primary: #3f5e45;
+  --primary-2: #5e7f63;
+  --soft: #e8eee3;
+  --soft-2: #f2f4ea;
+  --gold: #c9a257;
+  --gold-soft: #f6ecd3;
+  --gold-ink: #7d5f1b;
+  --good: #3f7a52;
+  --bad: #b4513c;
+  --radius: 20px;
+  --nav-h: 66px;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Noto Serif", serif;
+  --ar-size: 30px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 28px);
+}
+.serif { font-family: var(--serif); }
+
+/* Layar pembuka */
+#splash {
+  position: fixed; inset: 0; z-index: 100; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  transition: opacity .7s ease;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+#splash img { width: 124px; height: 124px; border-radius: 28px; box-shadow: 0 14px 34px rgba(63, 94, 69, .18); }
+.splash-name { font-size: 26px; letter-spacing: .5px; color: var(--primary); }
+
+/* Header */
+.topbar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: calc(10px + env(safe-area-inset-top)) 18px 10px;
+  background: rgba(250, 248, 241, .94);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { border-radius: 9px; box-shadow: 0 2px 8px rgba(63, 94, 69, .18); }
+.brand span { font-size: 21px; font-weight: 600; color: var(--primary); letter-spacing: .2px; }
+.chip {
+  background: transparent; color: var(--primary); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 13px; font-size: 12.5px; font-weight: 600;
+}
+
+main { max-width: 640px; margin: 0 auto; padding: 6px 18px 0; }
+h2 { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 26px 0 10px; color: var(--text); }
+h3 { font-size: 15px; font-weight: 650; margin: 0 0 8px; }
+.muted { color: var(--muted); font-size: 13px; }
+.small { font-size: 13px; }
+.center { text-align: center; }
+.row { display: flex; align-items: center; gap: 10px; }
+.between { justify-content: space-between; }
+.grow { flex: 1; min-width: 0; }
+.wrap { flex-wrap: wrap; }
+.mt { margin-top: 12px; }
+.mb { margin-bottom: 14px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 2px rgba(34, 48, 42, .03);
+}
+.card.soft { background: var(--soft-2); border-color: transparent; }
+.card.warn { background: var(--gold-soft); border-color: transparent; color: var(--gold-ink); }
+.card.flush { padding: 4px 18px; }
+
+/* Judul hari */
+.head-row { display: flex; align-items: center; justify-content: space-between; margin: 6px 0 16px; }
+.head-c { text-align: center; }
+.h1 { font-size: 25px; font-weight: 600; line-height: 1.2; }
+.head-c .muted { margin-top: 2px; }
+
+/* Kartu sholat berikutnya */
+.hero {
+  text-align: center; padding: 26px 18px 24px; margin-bottom: 14px;
+  border-radius: 26px; border: 1px solid var(--line);
+  background: linear-gradient(165deg, #e9efe3 0%, #f6f3e7 100%);
+}
+.hero-label { font-size: 12.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--primary-2); font-weight: 650; }
+.hero-name { font-size: 22px; margin-top: 8px; color: var(--text); }
+.hero-time { font-size: 60px; line-height: 1.05; font-weight: 600; color: var(--primary); margin: 2px 0 10px; letter-spacing: 1px; font-variant-numeric: lining-nums; }
+.hero-left { display: inline-block; font-size: 14px; font-weight: 600; background: var(--gold-soft); color: var(--gold-ink); padding: 5px 14px; border-radius: 999px; }
+.hero-sub { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.hint { text-align: center; font-size: 13.5px; color: var(--muted); margin: -2px 6px 14px; }
+
+/* Daftar */
+.item { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.item:last-child { border-bottom: 0; }
+.item .t { width: 54px; font-family: var(--serif); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text); flex: none; }
+.item.prayer .t { color: var(--primary); }
+.item.done .title { text-decoration: line-through; color: var(--muted); }
+.item .title { font-weight: 600; }
+.item .sub { font-size: 12.5px; color: var(--muted); }
+.tag { font-size: 11px; padding: 2px 9px; border-radius: 999px; background: var(--soft); color: var(--primary); font-weight: 650; flex: none; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage, #8fa893); display: inline-block; margin-right: 6px; }
+
+input[type=checkbox] {
+  -webkit-appearance: none; appearance: none; flex: none;
+  width: 24px; height: 24px; border-radius: 50%; margin: 0; cursor: pointer;
+  border: 1.6px solid #b6c3b5; background: transparent center / 14px no-repeat;
+  transition: background-color .15s, border-color .15s;
+}
+input[type=checkbox]:checked {
+  background-color: var(--primary); border-color: var(--primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-6.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Tombol */
+button, .btn {
+  font: inherit; cursor: pointer; border: 0; border-radius: 14px;
+  padding: 11px 16px; background: var(--primary); color: #fff; font-weight: 600;
+}
+button.ghost, .btn.ghost { background: transparent; color: var(--primary); border: 1px solid var(--line); }
+button.danger { background: transparent; color: var(--bad); border: 1px solid var(--line); }
+button.small, .btn.small { padding: 7px 13px; font-size: 13px; border-radius: 12px; }
+button.icon { background: transparent; color: var(--primary); padding: 6px 12px; font-size: 26px; line-height: 1; }
+button.pill { background: var(--soft); color: var(--primary); border-radius: 999px; padding: 7px 16px; font-size: 13px; }
+button:disabled { opacity: .5; }
+.fab {
+  position: fixed; right: 20px; bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 18px);
+  width: 58px; height: 58px; border-radius: 50%; font-size: 30px; padding: 0; line-height: 1;
+  box-shadow: 0 10px 24px rgba(63, 94, 69, .35); z-index: 6;
+}
+
+/* Formulir */
+label { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 6px; }
+input[type=text], input[type=number], input[type=time], input[type=date], input[type=password], select, textarea {
+  width: 100%; font: inherit; color: var(--text); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 14px; padding: 11px 13px;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary-2); outline-offset: 0; border-color: transparent; }
+textarea { min-height: 84px; resize: vertical; }
+input[type=range] { accent-color: var(--primary); }
+
+/* Navigasi bawah */
+.bottomnav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 8;
+  height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex; background: rgba(255, 254, 251, .96);
+  border-top: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.bottomnav button {
+  flex: 1; background: transparent; color: #8a968d; border-radius: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  font-size: 11.5px; font-weight: 600; padding: 6px 0;
+}
+.bottomnav svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.bottomnav button.active { color: var(--primary); }
+
+/* Modal & toast */
+.modal { position: fixed; inset: 0; z-index: 20; background: rgba(34, 48, 42, .45); display: flex; align-items: flex-end; justify-content: center; }
+.modal.hidden, .toast.hidden { display: none; }
+.modal-card {
+  width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+  background: var(--card); border-radius: 26px 26px 0 0; padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+}
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 30;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 90px);
+  background: var(--text); color: #fff; padding: 11px 18px; border-radius: 14px; font-size: 14px; max-width: 90%;
+}
+
+/* Segmen */
+.seg { display: flex; background: var(--soft-2); border-radius: 14px; padding: 4px; gap: 4px; }
+.seg button { flex: 1; background: transparent; color: var(--muted); padding: 8px 6px; font-size: 13.5px; border-radius: 11px; }
+.seg button.on { background: var(--card); color: var(--primary); box-shadow: 0 1px 3px rgba(34, 48, 42, .1); }
+
+/* Angka & bilah */
+.stat { display: flex; gap: 8px; }
+.stat > div { flex: 1; text-align: center; padding: 4px 2px; }
+.stat .v { font-family: var(--serif); font-weight: 600; font-size: 17px; }
+.stat > div + div { border-left: 1px solid var(--line); }
+.in { color: var(--good); } .out { color: var(--bad); }
+.bar { height: 8px; border-radius: 99px; background: var(--soft); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--primary-2); border-radius: 99px; }
+.bar.over > i { background: var(--bad); }
+.bar.gold > i { background: var(--gold); }
+
+/* Grafik 6 bulan */
+.chart { display: flex; gap: 10px; align-items: flex-end; height: 132px; margin-top: 8px; }
+.chart .col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
+.chart .bars { display: flex; gap: 4px; align-items: flex-end; width: 100%; height: 104px; justify-content: center; }
+.chart .bars i { width: 38%; max-width: 18px; border-radius: 6px 6px 2px 2px; min-height: 3px; }
+.b-in { background: var(--primary-2); } .b-out { background: var(--gold); }
+.chart .lbl { font-size: 11.5px; color: var(--muted); }
+.chart .col.cur .lbl { color: var(--primary); font-weight: 700; }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); margin-top: 10px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.insight { font-size: 14px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.insight:last-of-type { border-bottom: 0; }
+
+/* Al-Qur'an */
+.reader .ayah { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.reader .ar { font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif; font-size: var(--ar-size); line-height: 2.15; text-align: right; direction: rtl; }
+.reader .tr { font-size: 14.5px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+.reader .no { font-size: 12px; color: var(--primary-2); font-weight: 700; letter-spacing: .5px; }
+.reader .ayah.mark { background: var(--soft-2); margin: 0 -18px; padding-left: 18px; padding-right: 18px; border-radius: 14px; }
+.basmalah { text-align: center; font-size: calc(var(--ar-size) - 2px); font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif; padding: 18px 0 4px; color: var(--primary); }
+.surah-head { text-align: center; margin: 26px 0 0; }
+.surah-head .serif { font-size: 20px; font-weight: 600; color: var(--primary); }
+.rowlink {
+  display: flex; width: 100%; text-align: left; align-items: center; gap: 14px;
+  background: transparent; color: var(--text); border-radius: 0; border-bottom: 1px solid var(--line);
+  padding: 14px 2px; font-weight: 500;
+}
+.rowlink:last-child { border-bottom: 0; }
+.rowlink .n { width: 34px; height: 34px; border-radius: 50%; background: var(--soft); color: var(--primary); display: grid; place-items: center; font-weight: 700; font-size: 13px; flex: none; }
+.rowlink .ar { font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif; font-size: 22px; margin-left: auto; color: var(--primary); }
+.rowlink .chev { margin-left: auto; color: var(--muted); font-size: 22px; line-height: 1; }
+.rowlink b { font-weight: 600; }
+
+/* Lainnya */
+.menu-title { font-family: var(--serif); font-size: 15px; }
+.week { display: flex; gap: 6px; }
+.week .d { flex: 1; text-align: center; font-size: 11px; color: var(--muted); }
+.week .d i { display: block; width: 100%; aspect-ratio: 1; border-radius: 10px; background: var(--soft); margin-bottom: 4px; }
+.week .d i.on { background: var(--primary-2); }
+.empty { text-align: center; color: var(--muted); padding: 26px 0; font-size: 14px; }
+.mood { display: flex; gap: 8px; }
+.mood button { flex: 1; background: var(--soft-2); color: var(--text); font-size: 24px; border: 2px solid transparent; padding: 8px 0; }
+.mood button.on { border-color: var(--primary-2); background: var(--card); }
+.back { margin: 4px 0 4px -6px; }
+.pad-b { height: 8px; }
+.group-t { display: flex; justify-content: space-between; align-items: baseline; margin: 22px 2px 8px; }
+.group-t b { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+.bad { color: var(--bad); font-weight: 600; } .gold { color: var(--gold-ink); font-weight: 600; } .okc { color: var(--good); font-weight: 600; }
+
+/* Al-Qur'an per halaman */
+.mushaf {
+  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  font-size: var(--ar-size); line-height: 2.25; text-align: justify; text-align-last: center;
+  direction: rtl; padding: 6px 2px; color: var(--text);
+}
+.mushaf .end { color: var(--gold); font-size: .78em; white-space: nowrap; }
+#q-body .surah-head + .basmalah { padding-top: 8px; }
+.tr-list { margin-top: 22px; padding-top: 6px; border-top: 1px solid var(--line); }
+.tr-list h3 { margin-top: 14px; }
+.tr-item { font-size: 14.5px; line-height: 1.65; color: var(--muted); padding: 7px 0; }
+.tr-item b { color: var(--primary-2); font-size: 12px; margin-right: 4px; }
+
+/* Dzikir & doa */
+.ar-line {
+  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  font-size: 26px; line-height: 2; text-align: center; direction: rtl; color: var(--primary); padding: 2px 0 6px;
+}
+.dz .count {
+  background: var(--soft); color: var(--primary); border-radius: 999px; min-width: 112px;
+  padding: 10px 22px; display: flex; align-items: baseline; justify-content: center; gap: 6px;
+}
+.dz .count span { font-family: var(--serif); font-size: 30px; font-weight: 600; line-height: 1; }
+.dz .count small { font-size: 13px; opacity: .7; }
+.dz .count:active { transform: scale(.97); background: #dde7d6; }
+
+/* Sapaan */
+.greet { display: block; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; font-weight: 500; color: var(--muted); margin-bottom: 2px; letter-spacing: .2px; }
+.head-c .small { margin-top: 1px; }

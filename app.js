@@ -98,7 +98,7 @@ function save() {
 }
 
 /* ---------- UI dasar ---------- */
-const state = { tab: 'today', sub: null, date: ymd(), month: ymd().slice(0, 7), q: { page: 0, mode: 'surah', search: '' }, dzTab: 'dzikir' };
+const state = { tab: 'today', sub: null, date: ymd(), month: ymd().slice(0, 7), q: { page: 0, mode: 'surah', search: '' }, dzTab: 'dzikir', dzSet: 'pagi' };
 let toastTimer = null;
 function toast(msg, ms = 2800) {
   const t = $('#toast');
@@ -646,6 +646,64 @@ const DZIKIR = [
   { id: 'hawqalah', ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللّٰهِ', mean: 'Tiada daya dan kekuatan kecuali dengan pertolongan Allah', target: 33 },
   { id: 'shalawat', ar: 'ٱللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', mean: 'Ya Allah, limpahkan shalawat kepada Muhammad', target: 100 },
 ];
+
+const ayatJoin = (arr) => arr.map((t, i) => `${t} ﴿${arNum(i + 1)}﴾`).join(' ');
+const Z = {
+  kursi: { id: 'kursi', t: 'Ayat Kursi (Al-Baqarah: 255)', target: 1,
+    ar: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ',
+    mean: 'Allah, tiada tuhan selain Dia, Yang Maha Hidup, Yang terus-menerus mengurus makhluk-Nya. Dia tidak mengantuk dan tidak tidur. Milik-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafaat di sisi-Nya kecuali dengan izin-Nya. Dia mengetahui apa yang di hadapan dan di belakang mereka, dan mereka tidak mengetahui sesuatu pun dari ilmu-Nya kecuali apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak merasa berat memelihara keduanya. Dia Maha Tinggi, Maha Besar.' },
+  ikhlas: { id: 'ikhlas', t: 'Surah Al-Ikhlas', target: 3,
+    ar: ayatJoin(['قُلْ هُوَ اللَّهُ أَحَدٌ', 'اللَّهُ الصَّمَدُ', 'لَمْ يَلِدْ وَلَمْ يُولَدْ', 'وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ']),
+    mean: 'Katakanlah: Dialah Allah, Yang Maha Esa. Allah tempat bergantung segala sesuatu. Dia tidak beranak dan tidak diperanakkan. Dan tidak ada sesuatu pun yang setara dengan Dia.' },
+  falaq: { id: 'falaq', t: 'Surah Al-Falaq', target: 3,
+    ar: ayatJoin(['قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ', 'مِنْ شَرِّ مَا خَلَقَ', 'وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ', 'وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ', 'وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ']),
+    mean: 'Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh, dari kejahatan makhluk yang Dia ciptakan, dari kejahatan malam apabila telah gelap gulita, dari kejahatan para penyihir yang meniup pada buhul-buhul, dan dari kejahatan orang yang dengki apabila ia dengki.' },
+  nas: { id: 'nas', t: 'Surah An-Nas', target: 3,
+    ar: ayatJoin(['قُلْ أَعُوذُ بِرَبِّ النَّاسِ', 'مَلِكِ النَّاسِ', 'إِلَٰهِ النَّاسِ', 'مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ', 'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ', 'مِنَ الْجِنَّةِ وَالنَّاسِ']),
+    mean: 'Katakanlah: Aku berlindung kepada Tuhan manusia, Raja manusia, sembahan manusia, dari kejahatan bisikan setan yang bersembunyi, yang membisikkan ke dalam dada manusia, dari golongan jin dan manusia.' },
+  asbahna: { id: 'asbahna', t: 'Memasuki pagi', target: 1,
+    ar: 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ',
+    mean: 'Kami memasuki pagi dan kerajaan hanya milik Allah, segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Maha Kuasa atas segala sesuatu.' },
+  bika_pagi: { id: 'bika', t: 'Dengan-Mu kami berpagi hari', target: 1,
+    ar: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ',
+    mean: 'Ya Allah, dengan-Mu kami memasuki pagi, dengan-Mu kami memasuki sore, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu kebangkitan.' },
+  amsaina: { id: 'amsaina', t: 'Memasuki petang', target: 1,
+    ar: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ',
+    mean: 'Kami memasuki petang dan kerajaan hanya milik Allah, segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Maha Kuasa atas segala sesuatu.' },
+  bika_petang: { id: 'bika', t: 'Dengan-Mu kami bersore hari', target: 1,
+    ar: 'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ',
+    mean: 'Ya Allah, dengan-Mu kami memasuki sore, dengan-Mu kami memasuki pagi, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu tempat kembali.' },
+  sayyid: { id: 'sayyid', t: 'Sayyidul Istighfar', target: 1,
+    ar: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ',
+    mean: 'Ya Allah, Engkau Tuhanku, tiada tuhan selain Engkau. Engkau menciptakanku dan aku hamba-Mu, aku berada di atas perjanjian dan janji-Mu semampuku. Aku berlindung kepada-Mu dari keburukan yang kuperbuat. Aku mengakui nikmat-Mu kepadaku dan mengakui dosaku, maka ampunilah aku, karena tiada yang mengampuni dosa kecuali Engkau.' },
+  afiyah: { id: 'afiyah', t: 'Memohon kesehatan', target: 3,
+    ar: 'اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَٰهَ إِلَّا أَنْتَ',
+    mean: 'Ya Allah, sehatkanlah badanku. Ya Allah, sehatkanlah pendengaranku. Ya Allah, sehatkanlah penglihatanku. Tiada tuhan selain Engkau.' },
+  bismillah: { id: 'bismillah', t: 'Perlindungan dari bahaya', target: 3,
+    ar: 'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',
+    mean: 'Dengan nama Allah yang tidak ada sesuatu pun di bumi dan di langit yang dapat membahayakan bersama nama-Nya, dan Dia Maha Mendengar lagi Maha Mengetahui.' },
+  kalimat: { id: 'kalimat', t: 'Berlindung dengan kalimat Allah', target: 3,
+    ar: 'أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ',
+    mean: 'Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari keburukan makhluk yang Dia ciptakan.' },
+  ridha: { id: 'ridha', t: 'Ridha kepada Allah', target: 3,
+    ar: 'رَضِيتُ بِاللَّهِ رَبًّا وَبِالْإِسْلَامِ دِينًا وَبِمُحَمَّدٍ نَبِيًّا',
+    mean: 'Aku ridha Allah sebagai Tuhan, Islam sebagai agama, dan Muhammad sebagai nabi.' },
+  subhan: { id: 'subhan', t: 'Tasbih dan tahmid', target: 100,
+    ar: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+    mean: 'Maha Suci Allah dan segala puji bagi-Nya.' },
+  tahlil: { id: 'tahlil', t: 'Tahlil', target: 10,
+    ar: 'لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ',
+    mean: 'Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Maha Kuasa atas segala sesuatu.' },
+  istighfar: { id: 'istighfar', t: 'Istighfar dan taubat', target: 100,
+    ar: 'أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ',
+    mean: 'Aku memohon ampun kepada Allah dan bertaubat kepada-Nya.' },
+};
+const DZ_PAGI = [Z.kursi, Z.ikhlas, Z.falaq, Z.nas, Z.asbahna, Z.bika_pagi, Z.sayyid, Z.afiyah, Z.bismillah, Z.ridha, Z.subhan, Z.tahlil, Z.istighfar];
+const DZ_PETANG = [Z.kursi, Z.ikhlas, Z.falaq, Z.nas, Z.amsaina, Z.bika_petang, Z.sayyid, Z.afiyah, Z.bismillah, Z.kalimat, Z.ridha, Z.subhan, Z.tahlil, Z.istighfar];
+const DZ_SETS = { pagi: DZ_PAGI, petang: DZ_PETANG, umum: DZIKIR };
+const DZ_NAMES = { pagi: 'Dzikir pagi', petang: 'Dzikir petang', umum: 'Setelah sholat' };
+const dzFind = (key) => { const [set, id] = key.split(':'); return (DZ_SETS[set] || []).find((x) => x.id === id); };
+
 const DOA = [
   { t: 'Bangun tidur', ar: 'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ', mean: 'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami, dan kepada-Nya kami dikembalikan.' },
   { t: 'Sebelum tidur', ar: 'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', mean: 'Dengan nama-Mu ya Allah aku hidup dan aku mati.' },
@@ -672,7 +730,7 @@ function viewMore() {
   return `<div class="head-row"><div class="head-c" style="text-align:left"><div class="h1 serif">Lainnya</div></div></div>
     <div class="card flush">
       ${row('go-habits', 'Kebiasaan harian', 'Centang kebiasaan baik dan jaga rangkaian harinya')}
-      ${row('go-dzikir', 'Dzikir', 'Penghitung dzikir harian')}
+      ${row('go-dzikir', 'Dzikir', 'Dzikir pagi, petang, dan setelah sholat')}
       ${row('go-doa', 'Doa harian', 'Doa-doa pendek sehari-hari')}
     </div>
     <div class="card flush">
@@ -706,14 +764,18 @@ function viewAmalan() {
   const tab = state.dzTab, d = ymd(), log = S.dzikir[d] || {};
   let html = `<div class="row">${backBtn()}<div class="grow"><div class="h1 serif">${tab === 'dzikir' ? 'Dzikir' : 'Doa harian'}</div></div></div>`;
   if (tab === 'dzikir') {
-    html += `<div class="muted mb" style="margin-top:2px">Ketuk angka untuk menghitung. Tersimpan per hari.</div>`;
-    for (const z of DZIKIR) {
-      const c = log[z.id] || 0, pct = Math.min(100, Math.round((c / z.target) * 100));
+    const set = state.dzSet, list = DZ_SETS[set];
+    const doneN = list.filter((z) => (log[set + ':' + z.id] || 0) >= z.target).length;
+    html += `<div class="seg" style="margin:6px 0 12px">${['pagi', 'petang', 'umum'].map((k) => `<button class="${set === k ? 'on' : ''}" data-act="dz-set" data-s="${k}">${k === 'umum' ? 'Setelah sholat' : k === 'pagi' ? 'Pagi' : 'Petang'}</button>`).join('')}</div>
+      <div class="muted mb">${set === 'pagi' ? 'Dibaca setelah Subuh hingga pagi hari.' : set === 'petang' ? 'Dibaca setelah Ashar hingga Maghrib.' : 'Penghitung dzikir setelah sholat.'} Ketuk angka untuk menghitung. Selesai ${doneN} dari ${list.length}.</div>`;
+    for (const z of list) {
+      const key = set + ':' + z.id, c = log[key] || 0, pct = Math.min(100, Math.round((c / z.target) * 100));
       html += `<div class="card dz">
-        <div class="ar-line">${z.ar}</div><div class="muted center">${esc(z.mean)}</div>
+        ${z.t ? `<div class="dz-t">${esc(z.t)}</div>` : ''}
+        <div class="ar-line ${z.ar.length > 110 ? 'long' : ''}">${z.ar}</div><div class="muted ${z.mean.length > 140 ? 'tr-long' : 'center'}">${esc(z.mean)}</div>
         <div class="bar mt ${c >= z.target ? 'gold' : ''}"><i style="width:${pct}%"></i></div>
-        <div class="row between mt"><button class="ghost small" data-act="dz-reset" data-id="${z.id}">Ulang</button>
-        <button class="count" data-act="dz-add" data-id="${z.id}" aria-label="Tambah hitungan"><span id="dz-${z.id}">${c}</span><small>/ ${z.target}</small></button><span style="width:56px"></span></div>
+        <div class="row between mt"><button class="ghost small" data-act="dz-reset" data-key="${key}">Ulang</button>
+        <button class="count" data-act="dz-add" data-key="${key}" aria-label="Tambah hitungan"><span id="dz-${set}-${z.id}">${c}</span><small>/ ${z.target}</small></button><span style="width:56px"></span></div>
       </div>`;
     }
   } else {
@@ -895,7 +957,7 @@ ACT['export-csv'] = () => {
 
 // Lainnya
 ACT['go-habits'] = () => { state.sub = 'habits'; render(true); window.scrollTo(0, 0); };
-ACT['go-dzikir'] = () => { state.sub = 'amalan'; state.dzTab = 'dzikir'; render(true); window.scrollTo(0, 0); };
+ACT['go-dzikir'] = () => { state.sub = 'amalan'; state.dzTab = 'dzikir'; state.dzSet = new Date().getHours() < 14 ? 'pagi' : 'petang'; render(true); window.scrollTo(0, 0); };
 ACT['go-doa'] = () => { state.sub = 'amalan'; state.dzTab = 'doa'; render(true); window.scrollTo(0, 0); };
 ACT['go-settings'] = () => { state.sub = 'settings'; render(true); window.scrollTo(0, 0); };
 ACT['add-habit'] = () => openModal(habitForm({ name: '', remindAt: '' }));
@@ -909,20 +971,21 @@ ACT['save-habit'] = (el) => {
   save(); closeModal(); render(true);
 };
 ACT['del-habit'] = (el) => { if (!confirm('Hapus kebiasaan ini?')) return; S.habits = S.habits.filter((h) => h.id !== el.dataset.id); save(); closeModal(); render(true); };
+ACT['dz-set'] = (el) => { state.dzSet = el.dataset.s; render(true); window.scrollTo(0, 0); };
 ACT['dz-add'] = (el) => {
-  const d = ymd(), id = el.dataset.id;
+  const d = ymd(), key = el.dataset.key;
   S.dzikir[d] = S.dzikir[d] || {};
-  S.dzikir[d][id] = (S.dzikir[d][id] || 0) + 1;
+  S.dzikir[d][key] = (S.dzikir[d][key] || 0) + 1;
   save();
   if (navigator.vibrate) navigator.vibrate(12);
-  const z = DZIKIR.find((x) => x.id === id), c = S.dzikir[d][id];
-  const span = $('#dz-' + id);
+  const z = dzFind(key), c = S.dzikir[d][key];
+  const span = $('#dz-' + key.replace(':', '-'));
   if (span) span.textContent = c;
   const card = el.closest('.card'), bar = card && card.querySelector('.bar');
   if (bar && z) { bar.classList.toggle('gold', c >= z.target); bar.firstElementChild.style.width = Math.min(100, Math.round((c / z.target) * 100)) + '%'; }
-  if (z && c === z.target) { if (navigator.vibrate) navigator.vibrate([30, 40, 30]); toast('Target tercapai'); }
+  if (z && c === z.target) { if (navigator.vibrate) navigator.vibrate([30, 40, 30]); toast('Selesai ✓'); }
 };
-ACT['dz-reset'] = (el) => { const d = ymd(); if (S.dzikir[d]) S.dzikir[d][el.dataset.id] = 0; save(); render(true); };
+ACT['dz-reset'] = (el) => { const d = ymd(); if (S.dzikir[d]) S.dzikir[d][el.dataset.key] = 0; save(); render(true); };
 ACT.geo = () => {
   if (!navigator.geolocation) return toast('Browser tidak mendukung lokasi.');
   toast('Mencari lokasi…');

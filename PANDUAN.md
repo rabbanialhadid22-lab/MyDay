@@ -4,16 +4,17 @@ MyDay adalah aplikasi web yang dipasang di HP seperti aplikasi biasa. Isinya: ja
 
 ## 1. Unggah ke internet (sekali saja, gratis)
 
-Aplikasi harus dibuka lewat alamat `https://` agar bisa dipasang dan notifikasinya berfungsi. Membuka `index.html` langsung dari penyimpanan HP tidak akan berfungsi penuh.
+Aplikasi harus dibuka lewat alamat `https://` agar bisa dipasang dan notifikasinya berfungsi.
 
-Cara termudah, dari komputer:
+**GitHub Pages (disarankan):**
+1. Ekstrak `myday.zip`, buka foldernya sampai `index.html`, `style.css`, dan `app.js` terlihat berdampingan.
+2. Di github.com buat repositori **Public**, lalu **uploading an existing file**. Seret **semua file di dalam folder** (bukan foldernya) dan **Commit changes**.
+3. **Settings → Pages → Deploy from a branch → main → / (root) → Save**.
+4. Tunggu 1-2 menit. Alamatnya `https://NAMA-GITHUB.github.io/NAMA-REPO/`.
 
-1. Ekstrak `myday.zip` sehingga muncul folder `myday`.
-2. Buka **app.netlify.com/drop** di browser.
-3. Seret folder `myday` ke halaman itu.
-4. Tunggu beberapa detik. Anda akan mendapat alamat seperti `https://nama-acak.netlify.app`. Alamat itu bisa Anda ganti namanya di pengaturan situs Netlify.
+**Memperbarui versi yang sudah terunggah:** di repositori, **Add file → Upload files**, seret semua file dari versi baru (nama yang sama akan menggantikan yang lama), lalu **Commit changes**. Tunggu 1-2 menit, tutup MyDay di HP, lalu buka lagi.
 
-Alternatif dengan hasil sama: Cloudflare Pages atau GitHub Pages.
+Alternatif: Netlify Drop (app.netlify.com/drop, seret folder) atau Cloudflare Pages.
 
 ## 2. Pasang di HP Android
 
@@ -50,7 +51,8 @@ Mengunduh ulang file di kemudian hari memakai ID acara yang tetap, jadi biasanya
 - **Hari Ini:** sapaan, sholat berikutnya dengan hitung mundur, dan satu daftar jadwal yang memuat lima waktu sholat otomatis beserta kegiatan Anda. Centang untuk menandai selesai.
 - **Al-Qur'an:** per halaman mushaf (604 halaman), terjemahan Indonesia bisa disembunyikan, ukuran huruf bisa diubah, dan ada daftar surah dan juz. Ketuk **Selesai halaman ini** untuk mencatat bacaan harian dan lanjut.
 - **Keuangan:** pemasukan, pengeluaran, selisih bulan ini, dan anggaran bulanan dengan sisa.
-- **Lainnya:** kebiasaan harian dengan rangkaian hari beruntun, penghitung dzikir, doa harian, pengaturan, dan cadangan data.
+- **Lainnya:** kebiasaan harian dengan rangkaian hari beruntun, dzikir, doa harian, pengaturan, dan cadangan data.
+- **Dzikir:** tiga tab. **Pagi** (13 bacaan) dan **Petang** (14 bacaan) memuat Ayat Kursi, Al-Ikhlas, Al-Falaq, An-Nas, dzikir memasuki pagi atau petang, Sayyidul Istighfar, dan lainnya, masing-masing dengan penghitung sesuai jumlah bacaannya. Tab **Setelah sholat** berisi tasbih, tahmid, takbir, dan dzikir umum. Hitungan tersimpan per hari dan terpisah antara pagi dan petang.
 - **Puasa sunnah:** Senin, Kamis, Ayyamul Bidh (13-15 hijriah), Arafah, Tasu'a dan Asyura. Pengingat muncul malam sebelumnya. Hari Ramadhan, Idul Fitri, dan Idul Adha serta hari Tasyrik tidak disarankan puasa sunnah.
 
 ## 6. Data Anda
@@ -66,9 +68,9 @@ Sudah diuji di browser sungguhan dengan tampilan layar HP, memakai layanan tirua
 
 Belum bisa diuji dari sini: layanan jadwal sholat (Aladhan) dan Al-Qur'an (alquran.cloud) yang asli, notifikasi di HP nyata, dan tampilan di HP nyata. Format data kedua layanan saya ikuti dari pengetahuan tentang API-nya. Jika Al-Qur'an per halaman gagal memuat teks dan terjemahan sekaligus, aplikasi mencoba memuat teks Arab saja. Jika ada yang tidak muncul setelah dipasang, kirim pesan yang tampil dan saya perbaiki.
 
-Teks dzikir dan doa ditulis dari bacaan yang umum dikenal. Mohon periksa kembali dengan sumber yang Anda percaya.
+Teks dzikir pagi dan petang serta doa ditulis dari bacaan yang umum dikenal (rujukan seperti Hisnul Muslim). Jumlah pengulangan mengikuti yang masyhur. Mohon periksa kembali dengan sumber yang Anda percaya.
 
 ## Mengubah tampilan
 
-- Warna: bagian `:root` di `style.css`.
+- Warna: bagian `:root` di `style.css` (teal `--primary`, amber `--accent`).
 - Kebiasaan bawaan: bagian `DEFAULT_HABITS` di `app.js`, atau ubah langsung dari menu Lainnya → Kebiasaan harian.

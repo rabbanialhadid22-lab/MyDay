@@ -1,6 +1,6 @@
 /* MyDay service worker: cache kerangka aplikasi, cache Al-Qur'an, dan tampilkan notifikasi. */
-const SHELL = 'myday-shell-v2';
-const QURAN = 'myday-quran-v2';
+const SHELL = 'myday-shell-v3';
+const QURAN = 'myday-quran-v3';
 const FILES = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
